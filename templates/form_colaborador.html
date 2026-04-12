@@ -1,0 +1,17 @@
+<form
+    hx-post="{{ url_for('colaborador.inserir_colaborador') }}"
+    hx-target="#lista_clientes"
+    hx-swap="beforeend">
+
+    Nome: <input type="text" name="nomeForm" id=""><br>
+    Senha: <input type="text" name="senhaForm" id=""><br>
+    E-mail: <input type="email" name="emailForm" id=""><br>
+    Cargo:<label for="cargoForm"></label>
+      <select id="" name="cargoForm">
+        <option value="coordenador">Coordenador</option>
+        <option value="psicologa">Psicóloga</option>
+        <option value="social">Social</option>
+        <option value="orientador">Orientador</option>
+      </select><br>
+    <input type="submit" value="Cadastrar">
+</form>

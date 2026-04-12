@@ -1,0 +1,20 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Senha</th>
+      <th scope="col">Email</th>
+      <th scope="col">Cargo</th>
+      <th scope="col">Está Ativo?</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody id="lista_clientes">
+
+      {% for colaborador in db %}
+        {% include 'item_colaborador.html' %}
+      {% endfor %}
+
+  </tbody>
+</table>

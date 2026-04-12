@@ -1,0 +1,25 @@
+<tr>
+    <th scope="row">{{ colaborador.id }}</th>
+    <td>{{ colaborador.nome }}</td>
+    <td>{{ colaborador.senha }}</td>
+    <td>{{ colaborador.email }}</td>
+    <td>{{ colaborador.cargo }}</td>
+    <td>
+        {% if colaborador.esta_ativo %}
+            <span>Sim</span>
+        {% else %}
+            <span>Não</span>
+        {% endif %}
+
+    </td>
+    <td>
+        <button class="btn btn-primary">Editar</button>
+        <button
+            class="btn btn-danger"
+            hx-delete="{{ url_for('colaborador.deletar_colaborador', colaborador_id=colaborador.id) }}"
+            hx-target="closest tr"
+            hx-swap="outerHTML">Deletar
+        </button>
+    </td>
+
+</tr>
