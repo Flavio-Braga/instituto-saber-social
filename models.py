@@ -24,4 +24,5 @@ class Atendido(db.Model):
 
     nome = db.Column(db.String(30))
     nis = db.Column(db.Integer)
+    status = db.Column(db.Boolean(), default=True, nullable=False)
 
