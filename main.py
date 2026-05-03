@@ -1,5 +1,4 @@
-# Imports
-from flask import Flask
+from flask import Flask, render_template, request
 from db import db
 from routes.colaborador import colaborador_route
 from routes.home import home_route
@@ -12,20 +11,20 @@ app.register_blueprint(home_route)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 db.init_app(app)
 
-## Rotas
-# Rota - Login
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     if request.method == "POST":
-#         nome = request.form["nomeForm"]
-#         senha = request.form["senhaForm"]
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    from models import Usuario
+    
+    if request.method == "POST":
+        nome = request.form["nomeForm"]
+        senha = request.form["senhaForm"]
 
-#         if db.session().query(Usuario).filter_by(nome=nome).first():
-#             if db.session().query(Usuario).filter_by(senha=senha).first():
-#                 return render_template("home.html")
+        usuario = Usuario.query.filter_by(nome=nome).first()
+        if usuario and usuario.senha == senha:
+            return render_template("index.html")
 
-#         return "Login não existe"
-#     return render_template("login.html")
+        return render_template("login.html", error="Usuário ou senha inválidos")
+    return render_template("login.html")
 
 # Aplicação
 if __name__ == "__main__":
