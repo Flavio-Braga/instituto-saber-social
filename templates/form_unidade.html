@@ -1,0 +1,14 @@
+<form
+    hx-post="{{ url_for('unidade.inserir_unidade') }}"
+    hx-target="#lista_unidades"
+    hx-swap="beforeend">
+
+    Nome: <input type="text" name="nomeForm" required><br>
+    Tipo:
+      <select name="tipoForm" required>
+        <option value="ensino">Ensino</option>
+        <option value="administrativo">Administrativo</option>
+        <option value="comunitario">Comunitário</option>
+      </select><br>
+    <input type="submit" value="Cadastrar">
+</form>

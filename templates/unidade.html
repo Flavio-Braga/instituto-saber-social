@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestão de Unidades</title>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307THJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+        <h1 style="text-align: center;">Gestão de Unidades</h1>
+
+        <div hx-get="{{ url_for('unidade.form_new_unidade') }}" hx-trigger="load"></div>
+
+        <hr>
+
+        <h2>Lista de Unidades</h2>
+        <div hx-get="{{ url_for('unidade.lista_unidade') }}" hx-trigger="load"></div>
+        <div id="detalhe_unidade"></div>
+    </div>
+  </body>
+</html>

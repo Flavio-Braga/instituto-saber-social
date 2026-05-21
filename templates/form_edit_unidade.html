@@ -1,0 +1,17 @@
+<form
+    hx-put="{{ url_for('unidade.atualizar_unidade', unidade_id=unidade.id_unidade) }}"
+    hx-target="#unidade-{{ unidade.id_unidade }}"
+    hx-swap="outerHTML">
+
+    <h2>Editar unidade</h2>
+
+    Nome: <input type="text" name="nomeForm" value="{{ unidade.nome }}" required><br>
+    Tipo:
+    <select name="tipoForm" required>
+        <option value="ensino" {% if unidade.tipo == 'ensino' %}selected{% endif %}>Ensino</option>
+        <option value="administrativo" {% if unidade.tipo == 'administrativo' %}selected{% endif %}>Administrativo</option>
+        <option value="comunitario" {% if unidade.tipo == 'comunitario' %}selected{% endif %}>Comunitário</option>
+    </select><br>
+
+    <input type="submit" value="Salvar">
+</form>

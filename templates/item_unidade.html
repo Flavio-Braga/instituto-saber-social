@@ -1,0 +1,25 @@
+<tr id="unidade-{{ unidade.id_unidade }}">
+    <th scope="row">{{ unidade.id_unidade }}</th>
+    <td>{{ unidade.nome }}</td>
+    <td>{{ unidade.tipo }}</td>
+    <td>
+        <button
+            class="btn btn-secondary"
+            hx-get="{{ url_for('unidade.detalhe_unidade', unidade_id=unidade.id_unidade) }}"
+            hx-target="#detalhe_unidade"
+            hx-swap="innerHTML">Detalhes
+        </button>
+        <button
+            class="btn btn-primary"
+            hx-get="{{ url_for('unidade.form_edit_unidade', unidade_id=unidade.id_unidade) }}"
+            hx-target="#detalhe_unidade"
+            hx-swap="innerHTML">Editar
+        </button>
+        <button
+            class="btn btn-danger"
+            hx-delete="{{ url_for('unidade.deletar_unidade', unidade_id=unidade.id_unidade) }}"
+            hx-target="closest tr"
+            hx-swap="outerHTML">Deletar
+        </button>
+    </td>
+</tr>
