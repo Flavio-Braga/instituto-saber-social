@@ -1,0 +1,28 @@
+<tr id="frequencia-{{ frequencia.id_registro }}">
+    <th scope="row">{{ frequencia.id_registro }}</th>
+    <td>{{ frequencia.data_encontro.strftime('%d/%m/%Y') }}</td>
+    <td>{{ frequencia.atendido.nome if frequencia.atendido else '' }}</td>
+    <td>{{ frequencia.turma.nome if frequencia.turma else '' }}</td>
+    <td>{{ frequencia.colaborador.nome_completo if frequencia.colaborador else '' }}</td>
+    <td>{{ 'Sim' if frequencia.presente else 'Não' }}</td>
+    <td>
+        <button
+            class="btn btn-secondary"
+            hx-get="{{ url_for('frequencia.detalhe_frequencia', frequencia_id=frequencia.id_registro) }}"
+            hx-target="#detalhe_frequencia"
+            hx-swap="innerHTML">Detalhes
+        </button>
+        <button
+            class="btn btn-primary"
+            hx-get="{{ url_for('frequencia.form_edit_frequencia', frequencia_id=frequencia.id_registro) }}"
+            hx-target="#detalhe_frequencia"
+            hx-swap="innerHTML">Editar
+        </button>
+        <button
+            class="btn btn-danger"
+            hx-delete="{{ url_for('frequencia.deletar_frequencia', frequencia_id=frequencia.id_registro) }}"
+            hx-target="closest tr"
+            hx-swap="outerHTML">Deletar
+        </button>
+    </td>
+</tr>

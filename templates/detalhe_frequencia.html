@@ -1,0 +1,9 @@
+<section>
+    <h2>Detalhes da frequência</h2>
+    <p><strong>ID:</strong> {{ frequencia.id_registro }}</p>
+    <p><strong>Data do encontro:</strong> {{ frequencia.data_encontro.strftime('%d/%m/%Y') }}</p>
+    <p><strong>Atendido:</strong> {{ frequencia.atendido.nome if frequencia.atendido else 'Não informado' }}</p>
+    <p><strong>Turma:</strong> {{ frequencia.turma.nome if frequencia.turma else 'Não informada' }}</p>
+    <p><strong>Colaborador:</strong> {{ frequencia.colaborador.nome_completo if frequencia.colaborador else 'Não informado' }}</p>
+    <p><strong>Presente:</strong> {{ 'Sim' if frequencia.presente else 'Não' }}</p>
+</section>

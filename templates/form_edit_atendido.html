@@ -1,0 +1,18 @@
+<form
+    hx-put="{{ url_for('atendido.atualizar_atendido', atendido_id=atendido.id_atendido) }}"
+    hx-target="#atendido-{{ atendido.id_atendido }}"
+    hx-swap="outerHTML">
+
+    <h2>Editar atendido</h2>
+
+    Turma:
+    <select name="turmaForm" required>
+        {% for turma in turmas %}
+          <option value="{{ turma.id_turma }}" {% if turma.id_turma == atendido.id_turma %}selected{% endif %}>{{ turma.nome }}{% if turma.unidade %} - {{ turma.unidade.nome }}{% endif %}</option>
+        {% endfor %}
+    </select><br>
+    Nome: <input type="text" name="nomeForm" value="{{ atendido.nome }}" maxlength="100" required><br>
+    Ativo: <input type="checkbox" name="statusForm" {% if atendido.status %}checked{% endif %}><br>
+
+    <input type="submit" value="Salvar">
+</form>

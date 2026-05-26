@@ -3,11 +3,12 @@
     hx-target="#lista_clientes"
     hx-swap="beforeend">
 
-    Nome: <input type="text" name="nomeForm" id=""><br>
-    Senha: <input type="text" name="senhaForm" id=""><br>
-    E-mail: <input type="email" name="emailForm" id=""><br>
-    Cargo:<label for="cargoForm"></label>
-      <select id="" name="cargoForm">
+    Nome: <input type="text" name="nomeForm" required><br>
+    Senha: <input type="text" name="senhaForm" required><br>
+    E-mail: <input type="email" name="emailForm" required><br>
+    Telefone: <input type="text" name="telefoneForm"><br>
+    Cargo:
+      <select name="cargoForm">
         <option value="coordenador">Coordenador</option>
         <option value="psicologa">Psicóloga</option>
         <option value="social">Social</option>

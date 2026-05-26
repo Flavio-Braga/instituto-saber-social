@@ -1,0 +1,26 @@
+<tr id="turma-{{ turma.id_turma }}">
+    <th scope="row">{{ turma.id_turma }}</th>
+    <td>{{ turma.nome }}</td>
+    <td>{{ turma.turno }}</td>
+    <td>{{ turma.unidade.nome if turma.unidade else '' }}</td>
+    <td>
+        <button
+            class="btn btn-secondary"
+            hx-get="{{ url_for('turma.detalhe_turma', turma_id=turma.id_turma) }}"
+            hx-target="#detalhe_turma"
+            hx-swap="innerHTML">Detalhes
+        </button>
+        <button
+            class="btn btn-primary"
+            hx-get="{{ url_for('turma.form_edit_turma', turma_id=turma.id_turma) }}"
+            hx-target="#detalhe_turma"
+            hx-swap="innerHTML">Editar
+        </button>
+        <button
+            class="btn btn-danger"
+            hx-delete="{{ url_for('turma.deletar_turma', turma_id=turma.id_turma) }}"
+            hx-target="closest tr"
+            hx-swap="outerHTML">Deletar
+        </button>
+    </td>
+</tr>

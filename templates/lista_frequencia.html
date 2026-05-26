@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Data</th>
+      <th scope="col">Atendido</th>
+      <th scope="col">Turma</th>
+      <th scope="col">Colaborador</th>
+      <th scope="col">Presente</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody id="lista_frequencias">
+      {% for frequencia in db %}
+        {% include 'item_frequencia.html' %}
+      {% endfor %}
+  </tbody>
+</table>

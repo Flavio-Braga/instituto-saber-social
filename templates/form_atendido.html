@@ -1,0 +1,15 @@
+<form
+    hx-post="{{ url_for('atendido.inserir_atendido') }}"
+    hx-target="#lista_atendidos"
+    hx-swap="beforeend">
+
+    Turma:
+      <select name="turmaForm" required>
+        {% for turma in turmas %}
+          <option value="{{ turma.id_turma }}">{{ turma.nome }}{% if turma.unidade %} - {{ turma.unidade.nome }}{% endif %}</option>
+        {% endfor %}
+      </select><br>
+    Nome: <input type="text" name="nomeForm" maxlength="100" required><br>
+    Ativo: <input type="checkbox" name="statusForm" checked><br>
+    <input type="submit" value="Cadastrar">
+</form>

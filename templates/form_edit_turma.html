@@ -1,0 +1,24 @@
+<form
+    hx-put="{{ url_for('turma.atualizar_turma', turma_id=turma.id_turma) }}"
+    hx-target="#turma-{{ turma.id_turma }}"
+    hx-swap="outerHTML">
+
+    <h2>Editar turma</h2>
+
+    Unidade:
+    <select name="unidadeForm" required>
+        {% for unidade in unidades %}
+          <option value="{{ unidade.id_unidade }}" {% if unidade.id_unidade == turma.id_unidade %}selected{% endif %}>{{ unidade.nome }}</option>
+        {% endfor %}
+    </select><br>
+    Nome: <input type="text" name="nomeForm" value="{{ turma.nome }}" maxlength="10" required><br>
+    Turno:
+    <select name="turnoForm" required>
+        <option value="manha" {% if turma.turno == 'manha' %}selected{% endif %}>Manhã</option>
+        <option value="tarde" {% if turma.turno == 'tarde' %}selected{% endif %}>Tarde</option>
+        <option value="noite" {% if turma.turno == 'noite' %}selected{% endif %}>Noite</option>
+        <option value="integral" {% if turma.turno == 'integral' %}selected{% endif %}>Integral</option>
+    </select><br>
+
+    <input type="submit" value="Salvar">
+</form>

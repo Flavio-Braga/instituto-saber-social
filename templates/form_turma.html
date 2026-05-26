@@ -1,0 +1,21 @@
+<form
+    hx-post="{{ url_for('turma.inserir_turma') }}"
+    hx-target="#lista_turmas"
+    hx-swap="beforeend">
+
+    Unidade:
+      <select name="unidadeForm" required>
+        {% for unidade in unidades %}
+          <option value="{{ unidade.id_unidade }}">{{ unidade.nome }}</option>
+        {% endfor %}
+      </select><br>
+    Nome: <input type="text" name="nomeForm" maxlength="10" required><br>
+    Turno:
+      <select name="turnoForm" required>
+        <option value="manha">Manhã</option>
+        <option value="tarde">Tarde</option>
+        <option value="noite">Noite</option>
+        <option value="integral">Integral</option>
+      </select><br>
+    <input type="submit" value="Cadastrar">
+</form>

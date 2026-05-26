@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Turma</th>
+      <th scope="col">Status</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody id="lista_atendidos">
+      {% for atendido in db %}
+        {% include 'item_atendido.html' %}
+      {% endfor %}
+  </tbody>
+</table>

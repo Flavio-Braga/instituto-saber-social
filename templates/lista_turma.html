@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Turno</th>
+      <th scope="col">Unidade</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody id="lista_turmas">
+      {% for turma in db %}
+        {% include 'item_turma.html' %}
+      {% endfor %}
+  </tbody>
+</table>

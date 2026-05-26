@@ -3,12 +3,18 @@ from db import db
 from routes.colaborador import colaborador_route
 from routes.home import home_route
 from routes.unidade import unidade_route
+from routes.turma import turma_route
+from routes.atendido import atendido_route
+from routes.frequencia import frequencia_route
 
 # Setup
 app = Flask(__name__)
 app.register_blueprint(colaborador_route, url_prefix='/colaborador')
 app.register_blueprint(home_route)
 app.register_blueprint(unidade_route, url_prefix='/unidade')
+app.register_blueprint(turma_route, url_prefix='/turma')
+app.register_blueprint(atendido_route, url_prefix='/atendido')
+app.register_blueprint(frequencia_route, url_prefix='/frequencia')
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SECRET_KEY"] = "sua-chave-secreta-aqui"

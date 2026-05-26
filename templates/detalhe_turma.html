@@ -1,0 +1,7 @@
+<section>
+    <h2>Detalhes da turma</h2>
+    <p><strong>ID:</strong> {{ turma.id_turma }}</p>
+    <p><strong>Nome:</strong> {{ turma.nome }}</p>
+    <p><strong>Turno:</strong> {{ turma.turno }}</p>
+    <p><strong>Unidade:</strong> {{ turma.unidade.nome if turma.unidade else 'Não informada' }}</p>
+</section>

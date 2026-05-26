@@ -1,0 +1,27 @@
+<form
+    hx-post="{{ url_for('frequencia.inserir_frequencia') }}"
+    hx-target="#lista_frequencias"
+    hx-swap="beforeend">
+
+    Atendido:
+      <select name="atendidoForm" required>
+        {% for atendido in atendidos %}
+          <option value="{{ atendido.id_atendido }}">{{ atendido.nome }}</option>
+        {% endfor %}
+      </select><br>
+    Turma:
+      <select name="turmaForm" required>
+        {% for turma in turmas %}
+          <option value="{{ turma.id_turma }}">{{ turma.nome }}</option>
+        {% endfor %}
+      </select><br>
+    Colaborador:
+      <select name="colaboradorForm" required>
+        {% for colaborador in colaboradores %}
+          <option value="{{ colaborador.id_colaborador }}">{{ colaborador.nome_completo }}</option>
+        {% endfor %}
+      </select><br>
+    Data do encontro: <input type="date" name="dataForm" required><br>
+    Presente: <input type="checkbox" name="presenteForm" checked><br>
+    <input type="submit" value="Cadastrar">
+</form>

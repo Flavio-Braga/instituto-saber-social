@@ -1,0 +1,21 @@
+<form
+    hx-put="{{ url_for('colaborador.atualizar_colaborador', colaborador_id=colaborador.id_colaborador) }}"
+    hx-target="#colaborador-{{ colaborador.id_colaborador }}"
+    hx-swap="outerHTML">
+
+    <h2>Editar colaborador</h2>
+
+    Nome: <input type="text" name="nomeForm" value="{{ colaborador.nome_completo }}" required><br>
+    Senha: <input type="text" name="senhaForm" value="{{ colaborador.senha }}" required><br>
+    E-mail: <input type="email" name="emailForm" value="{{ colaborador.email }}" required><br>
+    Telefone: <input type="text" name="telefoneForm" value="{{ colaborador.telefone or '' }}"><br>
+    Cargo:
+    <select name="cargoForm">
+        <option value="coordenador" {% if colaborador.cargo == 'coordenador' %}selected{% endif %}>Coordenador</option>
+        <option value="psicologa" {% if colaborador.cargo == 'psicologa' %}selected{% endif %}>Psicóloga</option>
+        <option value="social" {% if colaborador.cargo == 'social' %}selected{% endif %}>Social</option>
+        <option value="orientador" {% if colaborador.cargo == 'orientador' %}selected{% endif %}>Orientador</option>
+    </select><br>
+
+    <input type="submit" value="Salvar">
+</form>

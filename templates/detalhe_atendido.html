@@ -1,0 +1,7 @@
+<section>
+    <h2>Detalhes do atendido</h2>
+    <p><strong>ID:</strong> {{ atendido.id_atendido }}</p>
+    <p><strong>Nome:</strong> {{ atendido.nome }}</p>
+    <p><strong>Turma:</strong> {{ atendido.turma.nome if atendido.turma else 'Não informada' }}</p>
+    <p><strong>Status:</strong> {{ 'Ativo' if atendido.status else 'Inativo' }}</p>
+</section>

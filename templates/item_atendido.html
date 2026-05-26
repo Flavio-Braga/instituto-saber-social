@@ -1,0 +1,26 @@
+<tr id="atendido-{{ atendido.id_atendido }}">
+    <th scope="row">{{ atendido.id_atendido }}</th>
+    <td>{{ atendido.nome }}</td>
+    <td>{{ atendido.turma.nome if atendido.turma else '' }}</td>
+    <td>{{ 'Ativo' if atendido.status else 'Inativo' }}</td>
+    <td>
+        <button
+            class="btn btn-secondary"
+            hx-get="{{ url_for('atendido.detalhe_atendido', atendido_id=atendido.id_atendido) }}"
+            hx-target="#detalhe_atendido"
+            hx-swap="innerHTML">Detalhes
+        </button>
+        <button
+            class="btn btn-primary"
+            hx-get="{{ url_for('atendido.form_edit_atendido', atendido_id=atendido.id_atendido) }}"
+            hx-target="#detalhe_atendido"
+            hx-swap="innerHTML">Editar
+        </button>
+        <button
+            class="btn btn-danger"
+            hx-delete="{{ url_for('atendido.deletar_atendido', atendido_id=atendido.id_atendido) }}"
+            hx-target="closest tr"
+            hx-swap="outerHTML">Deletar
+        </button>
+    </td>
+</tr>

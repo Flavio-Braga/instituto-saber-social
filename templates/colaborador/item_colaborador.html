@@ -1,0 +1,28 @@
+<tr id="colaborador-{{ colaborador.id_colaborador }}">
+    <th scope="row">{{ colaborador.id_colaborador }}</th>
+    <td>{{ colaborador.nome_completo }}</td>
+    <td>{{ colaborador.senha }}</td>
+    <td>{{ colaborador.email }}</td>
+    <td>{{ colaborador.cargo }}</td>
+    <td>{{ colaborador.telefone or '' }}</td>
+    <td>
+        <button
+            class="btn btn-secondary"
+            hx-get="{{ url_for('colaborador.detalhe_colaborador', colaborador_id=colaborador.id_colaborador) }}"
+            hx-target="#detalhe_colaborador"
+            hx-swap="innerHTML">Detalhes
+        </button>
+        <button
+            class="btn btn-primary"
+            hx-get="{{ url_for('colaborador.form_edit_colaborador', colaborador_id=colaborador.id_colaborador) }}"
+            hx-target="#detalhe_colaborador"
+            hx-swap="innerHTML">Editar
+        </button>
+        <button
+            class="btn btn-danger"
+            hx-delete="{{ url_for('colaborador.deletar_colaborador', colaborador_id=colaborador.id_colaborador) }}"
+            hx-target="closest tr"
+            hx-swap="outerHTML">Deletar
+        </button>
+    </td>
+</tr>

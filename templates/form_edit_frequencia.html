@@ -1,0 +1,30 @@
+<form
+    hx-put="{{ url_for('frequencia.atualizar_frequencia', frequencia_id=frequencia.id_registro) }}"
+    hx-target="#frequencia-{{ frequencia.id_registro }}"
+    hx-swap="outerHTML">
+
+    <h2>Editar frequência</h2>
+
+    Atendido:
+    <select name="atendidoForm" required>
+        {% for atendido in atendidos %}
+          <option value="{{ atendido.id_atendido }}" {% if atendido.id_atendido == frequencia.id_atendido %}selected{% endif %}>{{ atendido.nome }}</option>
+        {% endfor %}
+    </select><br>
+    Turma:
+    <select name="turmaForm" required>
+        {% for turma in turmas %}
+          <option value="{{ turma.id_turma }}" {% if turma.id_turma == frequencia.id_turma %}selected{% endif %}>{{ turma.nome }}</option>
+        {% endfor %}
+    </select><br>
+    Colaborador:
+    <select name="colaboradorForm" required>
+        {% for colaborador in colaboradores %}
+          <option value="{{ colaborador.id_colaborador }}" {% if colaborador.id_colaborador == frequencia.id_colaborador %}selected{% endif %}>{{ colaborador.nome_completo }}</option>
+        {% endfor %}
+    </select><br>
+    Data do encontro: <input type="date" name="dataForm" value="{{ frequencia.data_encontro.strftime('%Y-%m-%d') }}" required><br>
+    Presente: <input type="checkbox" name="presenteForm" {% if frequencia.presente %}checked{% endif %}><br>
+
+    <input type="submit" value="Salvar">
+</form>
