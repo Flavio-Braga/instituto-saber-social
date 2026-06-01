@@ -1,2 +1,11 @@
 __pycache__/
 *.pyc
+
+# Ambiente virtual
+.venv/
+
+# Banco de dados gerado pelo seed
+instance/
+
+# Configurações locais do Claude Code
+.claude/

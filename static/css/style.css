@@ -1,0 +1,11 @@
+/* Custom tweaks on top of Tailwind (loaded via CDN). */
+
+/* Remove the blue tap-highlight flash on mobile toggle buttons. */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Keep date inputs from looking cramped on iOS Safari. */
+input[type="date"] {
+  min-height: 48px;
+}

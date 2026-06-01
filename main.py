@@ -1,5 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, request, redirect, url_for
+from flask_login import current_user
+
+from config import Config
 from db import db
+from auth import login_manager
+
+# Feature blueprints (core system)
+from routes.auth import auth_route
+from routes.chamada import chamada_route
+from routes.relatorios import relatorios_route
+
+# Admin CRUD blueprints (existing)
 from routes.colaborador import colaborador_route
 from routes.home import home_route
 from routes.unidade import unidade_route
@@ -7,55 +18,38 @@ from routes.turma import turma_route
 from routes.atendido import atendido_route
 from routes.frequencia import frequencia_route
 
-# Setup
 app = Flask(__name__)
-app.register_blueprint(colaborador_route, url_prefix='/colaborador')
-app.register_blueprint(home_route)
-app.register_blueprint(unidade_route, url_prefix='/unidade')
-app.register_blueprint(turma_route, url_prefix='/turma')
-app.register_blueprint(atendido_route, url_prefix='/atendido')
-app.register_blueprint(frequencia_route, url_prefix='/frequencia')
+app.config.from_object(Config)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SECRET_KEY"] = "sua-chave-secreta-aqui"
 db.init_app(app)
+login_manager.init_app(app)
+
+# Core screens (login, attendance, reports) at the root.
+app.register_blueprint(auth_route)
+app.register_blueprint(chamada_route)
+app.register_blueprint(relatorios_route)
+
+# Existing admin CRUD, kept under their own prefixes.
+app.register_blueprint(home_route)
+app.register_blueprint(colaborador_route, url_prefix="/colaborador")
+app.register_blueprint(unidade_route, url_prefix="/unidade")
+app.register_blueprint(turma_route, url_prefix="/turma")
+app.register_blueprint(atendido_route, url_prefix="/atendido")
+app.register_blueprint(frequencia_route, url_prefix="/frequencia")
+
+# Endpoints reachable without authentication.
+PUBLIC_ENDPOINTS = {"auth.login", "static"}
 
 
 @app.before_request
-def verificar_login():
-    rotas_publicas = ["/login"]
-    if request.path in rotas_publicas or request.path.startswith("/static"):
+def require_login():
+    if request.endpoint is None or request.endpoint in PUBLIC_ENDPOINTS:
         return
-    if "usuario_logado" not in session:
-        return redirect(url_for("login"))
+    if not current_user.is_authenticated:
+        return redirect(url_for("auth.login", next=request.path))
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    from models import Colaborador
-
-    if request.method == "POST":
-        nome = request.form["nomeForm"]
-        senha = request.form["senhaForm"]
-
-        colaborador = Colaborador.query.filter_by(nome_completo=nome).first()
-        if colaborador and colaborador.senha == senha:
-            session["usuario_logado"] = colaborador.id_colaborador
-            return redirect(url_for("home.home"))
-
-        return render_template("login.html", error="Usuário ou senha inválidos")
-    return render_template("login.html")
-
-
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect(url_for("login"))
-
-
-# Aplicação
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-
     app.run(debug=True)

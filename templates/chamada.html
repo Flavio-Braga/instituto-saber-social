@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Chamada · Instituto Saber Social{% endblock %}
+
+{% block content %}
+<h1 class="text-xl font-bold text-brandDark mb-4">Chamada Digital</h1>
+
+<!-- Seletor de turma + data -->
+<form method="get" action="{{ url_for('chamada.chamada') }}"
+      class="bg-white rounded-xl shadow-sm p-4 mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+  <div>
+    <label for="turma_id" class="block text-sm font-medium text-gray-700 mb-1">Turma</label>
+    <select name="turma_id" id="turma_id" onchange="this.form.submit()"
+            class="w-full rounded-lg border-2 border-gray-200 px-3 py-3 text-base focus:border-brand focus:outline-none">
+      <option value="">— Selecione uma turma —</option>
+      {% for t in turmas %}
+        <option value="{{ t.id_turma }}" {% if turma and t.id_turma == turma.id_turma %}selected{% endif %}>
+          Turma {{ t.nome }} · {{ t.turno }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="data" class="block text-sm font-medium text-gray-700 mb-1">Data</label>
+    <input type="date" name="data" id="data" value="{{ data_str }}" onchange="this.form.submit()"
+           class="w-full rounded-lg border-2 border-gray-200 px-3 py-3 text-base focus:border-brand focus:outline-none">
+  </div>
+</form>
+
+{% if not turma %}
+  <div class="bg-white rounded-xl shadow-sm p-6 text-center text-gray-500">
+    Selecione uma turma para iniciar a chamada.
+  </div>
+{% elif not atendidos %}
+  <div class="bg-white rounded-xl shadow-sm p-6 text-center text-gray-500">
+    Nenhum atendido ativo matriculado nesta turma.
+  </div>
+{% else %}
+
+  {% if ja_registrada %}
+    <div class="mb-3 rounded-md bg-amber-100 text-amber-800 border border-amber-200 px-4 py-2 text-sm">
+      Já existe chamada registrada para esta data — editando os lançamentos.
+    </div>
+  {% endif %}
+
+  <!-- Contador de presentes -->
+  <div class="sticky top-[60px] z-10 mb-3">
+    <div class="bg-brandDark text-white rounded-xl px-4 py-3 flex items-center justify-between shadow">
+      <span class="text-sm font-medium">Presentes</span>
+      <span class="text-lg font-bold"><span id="present-count">{{ presentes_iniciais }}</span> de {{ atendidos|length }}</span>
+    </div>
+  </div>
+
+  <form method="post" action="{{ url_for('chamada.salvar_chamada') }}" id="chamada-form">
+    <input type="hidden" name="turma_id" value="{{ turma.id_turma }}">
+    <input type="hidden" name="data" value="{{ data_str }}">
+
+    <ul class="space-y-2">
+      {% for a in atendidos %}
+        {% set is_present = estado.get(a.id_atendido, False) %}
+        <li>
+          <input type="hidden" name="present_{{ a.id_atendido }}" id="val_{{ a.id_atendido }}"
+                 value="{{ '1' if is_present else '0' }}">
+          <button type="button"
+                  data-target="val_{{ a.id_atendido }}"
+                  class="attendance-toggle w-full min-h-[56px] rounded-xl px-4 py-3 flex items-center justify-between
+                         text-left font-medium shadow-sm transition
+                         {% if is_present %}bg-present text-white{% else %}bg-absent text-white{% endif %}">
+            <span class="text-base">{{ a.nome }}</span>
+            <span class="state-label text-sm font-semibold uppercase tracking-wide">
+              {{ 'Presente' if is_present else 'Ausente' }}
+            </span>
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <button type="submit"
+            class="mt-5 w-full rounded-xl bg-brand text-white font-bold py-4 text-base shadow
+                   hover:bg-brandDark transition">
+      Salvar Chamada
+    </button>
+  </form>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    const totalEl = document.getElementById("present-count");
+
+    function refreshCount() {
+      if (!totalEl) return;
+      const count = document.querySelectorAll('input[name^="present_"][value="1"]').length;
+      totalEl.textContent = count;
+    }
+
+    document.querySelectorAll(".attendance-toggle").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const input = document.getElementById(btn.dataset.target);
+        const label = btn.querySelector(".state-label");
+        const nowPresent = input.value !== "1";
+        input.value = nowPresent ? "1" : "0";
+
+        btn.classList.toggle("bg-present", nowPresent);
+        btn.classList.toggle("bg-absent", !nowPresent);
+        label.textContent = nowPresent ? "Presente" : "Ausente";
+        refreshCount();
+      });
+    });
+
+    refreshCount();
+  })();
+</script>
+{% endblock %}
