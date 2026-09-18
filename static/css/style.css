@@ -1,11 +1,131 @@
-/* Custom tweaks on top of Tailwind (loaded via CDN). */
+/* ==========================================================================
+   INSTITUTO SABER SOCIAL - DESIGN SYSTEM & IDENTIDADE VISUAL
+   ========================================================================== */
 
-/* Remove the blue tap-highlight flash on mobile toggle buttons. */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Cores Institucionais */
+  --brand-primary: #1e3a8a;       /* Azul Profundo Governança */
+  --brand-primary-hover: #1d4ed8;
+  --brand-primary-light: #eff6ff;
+  --brand-primary-border: #bfdbfe;
+  
+  --brand-secondary: #0d9488;     /* Verde Esmeralda Acolhimento Social */
+  --brand-secondary-hover: #0f766e;
+  --brand-secondary-light: #f0fdfa;
+  --brand-secondary-border: #99f6e4;
+
+  --accent-gold: #d97706;         /* Âmbar Educação */
+  --accent-gold-light: #fef3c7;
+
+  /* Superfícies */
+  --bg-app: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-secondary: #f1f5f9;
+
+  /* Textos */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  /* Bordas e Sombras */
+  --border-subtle: #e2e8f0;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 6px 16px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.12);
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header & Nav */
+.brand-nav {
+  background: rgba(30, 58, 138, 0.98) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-badge {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-pill);
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Attendance Buttons */
+.attendance-toggle {
+  transition: all var(--transition-fast) !important;
+  border-radius: var(--radius-md) !important;
+  user-select: none;
+  border: 1.5px solid transparent;
+}
+
+.attendance-toggle.bg-present {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+  border-color: #059669;
+}
+
+.attendance-toggle.bg-absent {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+  border-color: #dc2626;
+}
+
+.attendance-toggle:hover {
+  transform: translateY(-1px);
+}
+
+/* Cards & Containers */
+.card-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-fast);
+}
+
+.card-panel:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Inputs & Form Controls */
+.custom-input {
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+}
+
+.custom-input:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.12);
+}
+
+/* Mobile Optimizations */
 button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Keep date inputs from looking cramped on iOS Safari. */
 input[type="date"] {
   min-height: 48px;
 }

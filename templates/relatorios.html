@@ -1,28 +1,45 @@
 {% extends "base.html" %}
-{% block title %}Relatórios · Instituto Saber Social{% endblock %}
+{% block title %}Relatórios de Frequência · Instituto Saber Social{% endblock %}
 
 {% block content %}
-<h1 class="text-xl font-bold text-brandDark mb-4">Relatórios de Frequência</h1>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+  <div>
+    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-1.5">
+      <i class="ph-bold ph-chart-pie-slice"></i>
+      <span>Indicadores Socioassistenciais</span>
+    </div>
+    <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Relatórios de Frequência</h1>
+    <p class="text-sm text-slate-500">
+      Acompanhe a assiduidade dos atendidos por unidade, turma e período, garantindo a conformidade com as metas do SUAS.
+    </p>
+  </div>
+</div>
 
-<!-- Filtros -->
+<!-- Filtros de Consulta -->
 <form method="get" action="{{ url_for('relatorios.relatorios') }}"
       id="filters"
       data-sel-turma="{{ filters.turma_id or '' }}"
-      class="bg-white rounded-xl shadow-sm p-4 mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  
   <div>
-    <label for="unidade_id" class="block text-sm font-medium text-gray-700 mb-1">Unidade</label>
+    <label for="unidade_id" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+      Unidade
+    </label>
     <select name="unidade_id" id="unidade_id"
-            class="w-full rounded-lg border-2 border-gray-200 px-3 py-2.5 focus:border-brand focus:outline-none">
+            class="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-slate-800 bg-white focus:border-blue-700 focus:ring-4 focus:ring-blue-100 outline-none transition font-medium">
       <option value="">Todas as unidades</option>
       {% for u in unidades %}
         <option value="{{ u.id_unidade }}" {% if filters.unidade_id == u.id_unidade %}selected{% endif %}>{{ u.nome }}</option>
       {% endfor %}
     </select>
   </div>
+
   <div>
-    <label for="turma_id" class="block text-sm font-medium text-gray-700 mb-1">Turma</label>
+    <label for="turma_id" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+      Turma
+    </label>
     <select name="turma_id" id="turma_id"
-            class="w-full rounded-lg border-2 border-gray-200 px-3 py-2.5 focus:border-brand focus:outline-none">
+            class="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-slate-800 bg-white focus:border-blue-700 focus:ring-4 focus:ring-blue-100 outline-none transition font-medium">
       <option value="">Todas as turmas</option>
       {% for t in turmas %}
         <option value="{{ t.id_turma }}" {% if filters.turma_id == t.id_turma %}selected{% endif %}>
@@ -31,87 +48,111 @@
       {% endfor %}
     </select>
   </div>
+
   <div>
-    <label for="turno" class="block text-sm font-medium text-gray-700 mb-1">Turno</label>
+    <label for="turno" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+      Turno
+    </label>
     <select name="turno" id="turno"
-            class="w-full rounded-lg border-2 border-gray-200 px-3 py-2.5 focus:border-brand focus:outline-none">
+            class="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-slate-800 bg-white focus:border-blue-700 focus:ring-4 focus:ring-blue-100 outline-none transition font-medium">
       <option value="">Todos os turnos</option>
       <option value="Manhã" {% if filters.turno == 'Manhã' %}selected{% endif %}>Manhã</option>
       <option value="Tarde" {% if filters.turno == 'Tarde' %}selected{% endif %}>Tarde</option>
     </select>
   </div>
-  <div class="grid grid-cols-2 gap-3">
-    <div>
-      <label for="inicio" class="block text-sm font-medium text-gray-700 mb-1">De</label>
+
+  <div>
+    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+      Período de Análise
+    </label>
+    <div class="grid grid-cols-2 gap-2">
       <input type="date" name="inicio" id="inicio" value="{{ filters.inicio.isoformat() }}"
-             class="w-full rounded-lg border-2 border-gray-200 px-3 py-2.5 focus:border-brand focus:outline-none">
-    </div>
-    <div>
-      <label for="fim" class="block text-sm font-medium text-gray-700 mb-1">Até</label>
+             class="w-full rounded-xl border border-slate-200 px-2.5 py-2 text-xs text-slate-800 bg-white focus:border-blue-700 outline-none">
       <input type="date" name="fim" id="fim" value="{{ filters.fim.isoformat() }}"
-             class="w-full rounded-lg border-2 border-gray-200 px-3 py-2.5 focus:border-brand focus:outline-none">
+             class="w-full rounded-xl border border-slate-200 px-2.5 py-2 text-xs text-slate-800 bg-white focus:border-blue-700 outline-none">
     </div>
   </div>
-  <div class="sm:col-span-2 flex flex-wrap gap-3 pt-1">
+
+  <div class="sm:col-span-2 lg:col-span-4 flex flex-wrap gap-3 pt-2 border-t border-slate-100">
     <button type="submit"
-            class="rounded-lg bg-brand text-white font-semibold px-5 py-2.5 hover:bg-brandDark transition">
-      Aplicar filtros
+            class="rounded-xl bg-blue-800 hover:bg-blue-700 text-white font-bold px-5 py-2.5 text-sm shadow-md transition flex items-center gap-2">
+      <i class="ph-bold ph-funnel"></i>
+      <span>Aplicar Filtros</span>
     </button>
+    
     <button type="submit" formaction="{{ url_for('relatorios.exportar_csv') }}"
-            class="rounded-lg border-2 border-brand text-brand font-semibold px-5 py-2.5 hover:bg-brand hover:text-white transition">
-      Exportar CSV
+            class="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold px-5 py-2.5 text-sm shadow-sm transition flex items-center gap-2">
+      <i class="ph-bold ph-file-csv text-emerald-600 text-lg"></i>
+      <span>Exportar CSV</span>
     </button>
   </div>
 </form>
 
-<!-- Resultados -->
-<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+<!-- Tabela de Resultados -->
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-3">
   <div class="overflow-x-auto">
     <table class="w-full text-sm">
-      <thead class="bg-gray-50 text-gray-600 text-left">
+      <thead class="bg-slate-50 text-slate-600 text-left border-b border-slate-200 text-xs font-bold uppercase tracking-wider">
         <tr>
-          <th class="px-3 py-2 font-semibold">Nome</th>
-          <th class="px-3 py-2 font-semibold">Unidade</th>
-          <th class="px-3 py-2 font-semibold">Turma</th>
-          <th class="px-3 py-2 font-semibold text-right">Total de dias</th>
-          <th class="px-3 py-2 font-semibold text-right">Presentes</th>
-          <th class="px-3 py-2 font-semibold text-right">Frequência</th>
+          <th class="px-4 py-3.5">Beneficiário</th>
+          <th class="px-4 py-3.5">Unidade</th>
+          <th class="px-4 py-3.5">Turma / Turno</th>
+          <th class="px-4 py-3.5 text-right">Dias Letivos</th>
+          <th class="px-4 py-3.5 text-right">Presenças</th>
+          <th class="px-4 py-3.5 text-right">Assiduidade</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-100">
+      <tbody class="divide-y divide-slate-100">
         {% for r in rows %}
-          <tr class="{% if r.abaixo_minimo %}bg-amber-50{% endif %}">
-            <td class="px-3 py-2">{{ r.nome }}</td>
-            <td class="px-3 py-2 text-gray-500">{{ r.unidade }}</td>
-            <td class="px-3 py-2 text-gray-500">{{ r.turma }} · {{ r.turno }}</td>
-            <td class="px-3 py-2 text-right">{{ r.total }}</td>
-            <td class="px-3 py-2 text-right">{{ r.presentes }}</td>
-            <td class="px-3 py-2 text-right font-semibold
-                       {% if r.total == 0 %}text-gray-400
-                       {% elif r.abaixo_minimo %}text-warn{% else %}text-present{% endif %}">
-              {{ r.percentual }}%
+          <tr class="hover:bg-slate-50/70 transition {% if r.abaixo_minimo %}bg-amber-50/60{% endif %}">
+            <td class="px-4 py-3 font-semibold text-slate-800">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-xs">
+                  {{ r.nome[0]|upper }}
+                </div>
+                <span>{{ r.nome }}</span>
+              </div>
+            </td>
+            <td class="px-4 py-3 text-slate-500 text-xs">{{ r.unidade }}</td>
+            <td class="px-4 py-3 text-slate-500 text-xs">{{ r.turma }} · {{ r.turno }}</td>
+            <td class="px-4 py-3 text-right font-mono text-slate-600">{{ r.total }}</td>
+            <td class="px-4 py-3 text-right font-mono font-bold text-emerald-600">{{ r.presentes }}</td>
+            <td class="px-4 py-3 text-right">
+              <span class="inline-flex items-center gap-1 font-bold font-mono text-xs px-2 py-0.5 rounded-full
+                     {% if r.total == 0 %}bg-slate-100 text-slate-400
+                     {% elif r.abaixo_minimo %}bg-amber-100 text-amber-800 border border-amber-200
+                     {% else %}bg-emerald-100 text-emerald-800 border border-emerald-200{% endif %}">
+                {{ r.percentual }}%
+              </span>
             </td>
           </tr>
         {% else %}
-          <tr><td colspan="6" class="px-3 py-6 text-center text-gray-500">Nenhum dado para os filtros selecionados.</td></tr>
+          <tr>
+            <td colspan="6" class="px-4 py-12 text-center text-slate-400">
+              <i class="ph-bold ph-magnifying-glass text-3xl mb-2 text-slate-300 block"></i>
+              Nenhum dado encontrado para os filtros selecionados.
+            </td>
+          </tr>
         {% endfor %}
       </tbody>
       {% if rows %}
-      <tfoot class="bg-gray-50 font-semibold text-gray-700">
+      <tfoot class="bg-slate-50/80 font-bold text-slate-800 border-t border-slate-200 text-xs">
         <tr>
-          <td class="px-3 py-2" colspan="3">{{ totais.qtd_atendidos }} atendido(s)</td>
-          <td class="px-3 py-2 text-right">{{ totais.total_dias }}</td>
-          <td class="px-3 py-2 text-right">{{ totais.total_presentes }}</td>
-          <td class="px-3 py-2 text-right">{{ totais.media }}%</td>
+          <td class="px-4 py-3.5" colspan="3">{{ totais.qtd_atendidos }} atendido(s) no total</td>
+          <td class="px-4 py-3.5 text-right font-mono">{{ totais.total_dias }}</td>
+          <td class="px-4 py-3.5 text-right font-mono text-emerald-700">{{ totais.total_presentes }}</td>
+          <td class="px-4 py-3.5 text-right font-mono text-blue-800 text-sm">{{ totais.media }}%</td>
         </tr>
       </tfoot>
       {% endif %}
     </table>
   </div>
 </div>
-<p class="text-xs text-gray-500 mt-2">
-  As linhas destacadas em âmbar estão abaixo da frequência mínima de {{ min_frequencia }}%.
-</p>
+
+<div class="flex items-center gap-2 text-xs text-slate-500">
+  <span class="w-3 h-3 rounded bg-amber-100 border border-amber-300 inline-block"></span>
+  <span>Linhas destacadas em âmbar indicam frequência abaixo do índice mínimo estipulado ({{ min_frequencia }}%).</span>
+</div>
 {% endblock %}
 
 {% block scripts %}
@@ -140,7 +181,6 @@
       loadTurmas(unidadeSel.value, null);
     });
 
-    // Ao carregar, restringe a lista de turmas à unidade selecionada (mantendo a turma escolhida).
     if (unidadeSel.value) {
       loadTurmas(unidadeSel.value, preselected);
     }

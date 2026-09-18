@@ -1,11 +1,77 @@
-<!doctype html>
-<html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Tela de Login</title>
-    </head>
-    <body>
-        <h1>HOME</h1>
-        <p>Você está logado!</p>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block title %}Painel Principal · Instituto Saber Social{% endblock %}
+
+{% block content %}
+<!-- Banner de Boas-Vindas -->
+<div class="bg-gradient-to-br from-blue-900 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl mb-6 relative overflow-hidden">
+  <div class="relative z-10">
+    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-semibold uppercase tracking-wider mb-2 border border-teal-500/30">
+      <i class="ph-bold ph-buildings"></i>
+      <span>{{ current_user.unidade.nome }} · Gestão SUAS</span>
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+      Olá, {{ current_user.nome_completo }}!
+    </h1>
+    <p class="text-slate-300 text-sm max-w-xl">
+      Bem-vindo(a) ao portal do Instituto Saber Social. Acompanhe a rotina socioassistencial, registre as chamadas das turmas e acerte a frequência dos atendidos.
+    </p>
+  </div>
+</div>
+
+<!-- Ações Rápidas em Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+  <!-- Card 1: Chamada -->
+  <a href="{{ url_for('chamada.chamada') }}" 
+     class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition group flex flex-col justify-between">
+    <div>
+      <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+        <i class="ph-bold ph-check-square-offset"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition mb-1">
+        Chamada Digital
+      </h3>
+      <p class="text-sm text-slate-500">
+        Registre e atualize a presença diária das turmas e oficinas com controle de assiduidade em tempo real.
+      </p>
+    </div>
+    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center gap-1 text-sm font-bold text-teal-600">
+      <span>Acessar Diário</span>
+      <i class="ph-bold ph-arrow-right"></i>
+    </div>
+  </a>
+
+  <!-- Card 2: Relatórios -->
+  <a href="{{ url_for('relatorios.relatorios') }}" 
+     class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition group flex flex-col justify-between">
+    <div>
+      <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+        <i class="ph-bold ph-chart-pie-slice"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition mb-1">
+        Relatórios & Frequência
+      </h3>
+      <p class="text-sm text-slate-500">
+        Gere relatórios analíticos de assiduidade por período, identifique atendidos com faltas recorrentes e exporte CSV.
+      </p>
+    </div>
+    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center gap-1 text-sm font-bold text-blue-600">
+      <span>Consultar Relatórios</span>
+      <i class="ph-bold ph-arrow-right"></i>
+    </div>
+  </a>
+</div>
+
+<!-- Mural Informativo Institucional -->
+<div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+  <div class="flex items-center gap-2 mb-3">
+    <i class="ph-bold ph-info text-blue-700 text-xl"></i>
+    <h3 class="font-bold text-slate-900">Orientações Socioassistenciais</h3>
+  </div>
+  <p class="text-sm text-slate-600 leading-relaxed mb-3">
+    A assiduidade dos atendidos deve ser mantida acima de <strong>75%</strong> conforme pactuado com a rede socioassistencial e as diretrizes do Serviço de Convivência e Fortalecimento de Vínculos (SCFV).
+  </p>
+  <div class="text-xs text-slate-400">
+    Instituto Saber Social · Sede e Filiais operando em conformidade.
+  </div>
+</div>
+{% endblock %}
